@@ -1,4 +1,5 @@
 # Roblox Legacy Place Converter
+## [Download](https://github.com/BakonBot/legacy-place-converter/releases)
 ## What does it do?
 Converts recent Roblox places to a format that old Roblox versions can read.
 ## How do I use it?

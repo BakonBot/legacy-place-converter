@@ -5,19 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Roblox_Legacy_Place_Convertor"
         mc:Ignorable="d"
-        Title="Roblox Legacy Place Converter" Height="227" Width="464" Icon="Assets/converterLogo.ico">
+        Title="Roblox Legacy Place Converter" Height="227" Width="889" Icon="Assets/converterLogo.ico">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF0F2630" Offset="0"/>
+            <GradientStop Color="#FF235970" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
     <Grid>
-        <Label Content="Converts new places in a way that old clients can open them" Margin="10,10,10,0" VerticalAlignment="Top" FontSize="16" Height="35"/>
-        <Label x:Name="PlaceSelectedLabel" Content="Place selected: None" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top"/>
+        <Label Content="Converts new places in a way that old clients can open them" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="16" Height="35" HorizontalAlignment="Left" Width="440" Foreground="White"/>
+        <Label x:Name="PlaceSelectedLabel" Content="Place selected: None" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top" Foreground="White"/>
         <Button x:Name="BrowseButton" Content="Browse" HorizontalAlignment="Left" Margin="15,71,0,0" VerticalAlignment="Top" Width="75" Height="24" Click="BrowseButton_Click"/>
         <Button x:Name="ConvertButton" Content="CONVERT" HorizontalAlignment="Left" Margin="15,104,0,0" VerticalAlignment="Top" Width="125" Height="31" Click="ConvertButton_Click"/>
-        <ProgressBar x:Name="ProgressBar" Height="15" Margin="150,104,10,0" VerticalAlignment="Top" Value="0"/>
-        <Label x:Name="ProgressLabel" Content="" HorizontalAlignment="Left" Margin="145,117,0,0" VerticalAlignment="Top" Height="28"/>
-        <Label Content="Made by BakonBot" HorizontalAlignment="Left" Margin="19,145,0,0" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="130,150,0,0">           
-            <Hyperlink x:Name="GithubHyperlink" NavigateUri="https://github.com/BakonBot/legacy-place-convertert" RequestNavigate="GithubHyperlink_RequestNavigate">
+        <ProgressBar x:Name="ProgressBar" Height="15" Margin="150,104,0,0" VerticalAlignment="Top" Value="0" HorizontalAlignment="Left" Width="290"/>
+        <Label x:Name="ProgressLabel" Content="" HorizontalAlignment="Left" Margin="145,117,0,0" VerticalAlignment="Top" Height="28" Background="{x:Null}" Foreground="White"/>
+        <Label Content="Made by BakonBot" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Margin="11,145,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="121,150,0,0">           
+            <Hyperlink x:Name="GithubHyperlink" NavigateUri="https://github.com/BakonBot/legacy-place-converter" RequestNavigate="GithubHyperlink_RequestNavigate" Foreground="#FF48A3FF">
                 Github
             </Hyperlink>
         </TextBlock>
+        <Separator HorizontalAlignment="Left" Height="26" Margin="379,84,0,0" VerticalAlignment="Top" Width="162" RenderTransformOrigin="0.5,0.5">
+            <Separator.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Separator.RenderTransform>
+        </Separator>
+        <CheckBox x:Name="ColorCheckbox" Content="Include colors" HorizontalAlignment="Left" Margin="474,49,0,0" VerticalAlignment="Top" IsChecked="True" Height="15" FontStretch="SemiExpanded" Foreground="White"/>
+        <CheckBox x:Name="UnionCheckbox" Content="Include Union data (may break place file)" HorizontalAlignment="Left" Margin="474,69,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <Label Content="Advanced Settings" Margin="474,10,0,0" VerticalAlignment="Top" FontSize="16" Height="35" HorizontalAlignment="Left" Width="397" Foreground="White"/>
     </Grid>
 </Window>

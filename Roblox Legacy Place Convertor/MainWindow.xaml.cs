@@ -107,6 +107,10 @@ namespace Roblox_Legacy_Place_Convertor
 
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
         {
+            if (isConverting == true) // So you can't browse for a place while it's converting
+            {
+                return;
+            }
             // Opens a file dialog asking you which file do you want to convert
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Filter = "Roblox XML Place Files (*.rbxlx)|*.rbxlx";
@@ -146,50 +150,67 @@ namespace Roblox_Legacy_Place_Convertor
             ProgressLabel.Content = "Making copy of file...";
             File.Copy(fileToConvertPath, newFilePath, true);
             // Read file contents
-            ProgressBar.Value = 10;
-            ProgressLabel.Content = "Reading contents...";
             string fileContents = File.ReadAllText(newFilePath);
             // Search for terrain in place file, necessary for place to even open on old Roblox versions. When it finds its start and end, it removes the terrain part completely.
-            ProgressBar.Value = 15;
-            ProgressLabel.Content = "Removing terrain...";
+
             int terrainIndex = fileContents.IndexOf("<Item class=\"Terrain\"");
             if (terrainIndex != -1)
             {
-                int terrainEndIndex = fileContents.IndexOf("</Item>", terrainIndex, StringComparison.Ordinal);
+                int terrainEndIndex = fileContents.IndexOf("</Item>", terrainIndex);
                 if (terrainEndIndex != -1)
                 {
                     fileContents = fileContents.Remove(terrainIndex, terrainEndIndex - terrainIndex + 7);
-                    
+
                 }
             }
-            // Convert colors from Color3uint8 to BrickColor
-            ProgressBar.Value = 50;
-            ProgressLabel.Content = "Converting colors...";
 
-            int colorIndex = fileContents.IndexOf("<Color3uint8 name=\"Color3uint8\">");
-            while (colorIndex != -1)
+            // Convert colors from Color3uint8 to BrickColor
+            if (ColorCheckbox.IsChecked == true)
             {
-                int colorEndIndex = fileContents.IndexOf("</Color3uint8>", colorIndex);
-                if (colorEndIndex != -1)
+                int colorIndex = fileContents.IndexOf("<Color3uint8 name=\"Color3uint8\">");
+                while (colorIndex != -1)
                 {
-                    string color3uint8Code = fileContents.Substring(colorIndex + 32, colorEndIndex - colorIndex - 32);
-                    fileContents = fileContents.Remove(colorIndex, colorEndIndex - colorIndex + 14);
-                    if (color3uint8ToBrickColor.ContainsKey(color3uint8Code))
+                    int colorEndIndex = fileContents.IndexOf("</Color3uint8>", colorIndex);
+                    if (colorEndIndex != -1)
                     {
-                        fileContents = fileContents.Insert(colorIndex, "<int name=\"BrickColor\">" + color3uint8ToBrickColor[color3uint8Code] + "</int>");
+                        string color3uint8Code = fileContents.Substring(colorIndex + 32, colorEndIndex - colorIndex - 32);
+                        fileContents = fileContents.Remove(colorIndex, colorEndIndex - colorIndex + 14);
+                        if (color3uint8ToBrickColor.ContainsKey(color3uint8Code))
+                        {
+                            fileContents = fileContents.Insert(colorIndex, "<int name=\"BrickColor\">" + color3uint8ToBrickColor[color3uint8Code] + "</int>");
+                        }
+                    }
+                    colorIndex = fileContents.IndexOf("<Color3uint8 name=\"Color3uint8\">", colorIndex);
+                }
+            }
+
+            //If Union data is turned off, removes union data
+            if (UnionCheckbox.IsChecked == false)
+            {
+                int unionIndex = fileContents.IndexOf("<Item class=\"NonReplicatedCSGDictionaryService\"");
+                if (unionIndex != -1)
+                {
+                    int binaryStringIndex = fileContents.IndexOf("<Item class=\"BinaryStringValue\"", unionIndex);
+                    while (binaryStringIndex != -1)
+                    {
+                        int binaryStringEndIndex = fileContents.IndexOf("</Item>", binaryStringIndex);
+                        if (binaryStringEndIndex != -1)
+                        {
+                            fileContents = fileContents.Remove(binaryStringIndex, binaryStringEndIndex - binaryStringIndex + 7);
+                        }
+                        binaryStringIndex = fileContents.IndexOf("<Item class=\"BinaryStringValue\"", binaryStringIndex);
                     }
                 }
-                colorIndex = fileContents.IndexOf("<Color3uint8 name=\"Color3uint8\">", colorIndex);
             }
 
             // Write fileContents string to the copy file
-            ProgressBar.Value = 90;
-            ProgressLabel.Content = "Writing to copy...";
             File.WriteAllText(newFilePath, fileContents);
             // Done :D
             ProgressBar.Value = 100;
             ProgressLabel.Content = "Done!";
             MessageBox.Show("Conversion done!", "Conversion status", MessageBoxButton.OK, MessageBoxImage.Information);
+            isConverting = false;
+            ConvertButton.IsEnabled = true;
         }
     }
 }

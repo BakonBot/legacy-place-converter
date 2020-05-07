@@ -26,8 +26,8 @@ namespace Roblox_Legacy_Place_Convertor
     {
         private string fileToConvertPath;
         private string newFilePath;
-        private bool isConverting = false;
-        Dictionary<string, string> color3uint8ToBrickColor = new Dictionary<string, string>() // Yes, i wrote this all manually. Took me about 2 hours.
+        private bool isConverting;
+        private static readonly Dictionary<string, string> color3uint8ToBrickColor = new Dictionary<string, string> // Yes, i wrote this all manually. Took me about 2 hours.
         {
             {"4294112243", "1"},
             {"4294901760", "1004"},
@@ -153,10 +153,10 @@ namespace Roblox_Legacy_Place_Convertor
             string fileContents = File.ReadAllText(newFilePath);
             // Search for terrain in place file, necessary for place to even open on old Roblox versions. When it finds its start and end, it removes the terrain part completely.
 
-            int terrainIndex = fileContents.IndexOf("<Item class=\"Terrain\"");
+            int terrainIndex = fileContents.IndexOf("<Item class=\"Terrain\"", StringComparison.Ordinal);
             if (terrainIndex != -1)
             {
-                int terrainEndIndex = fileContents.IndexOf("</Item>", terrainIndex);
+                int terrainEndIndex = fileContents.IndexOf("</Item>", terrainIndex, StringComparison.Ordinal);
                 if (terrainEndIndex != -1)
                 {
                     fileContents = fileContents.Remove(terrainIndex, terrainEndIndex - terrainIndex + 7);
@@ -167,38 +167,27 @@ namespace Roblox_Legacy_Place_Convertor
             // Convert colors from Color3uint8 to BrickColor
             if (ColorCheckbox.IsChecked == true)
             {
-                int colorIndex = fileContents.IndexOf("<Color3uint8 name=\"Color3uint8\">");
-                while (colorIndex != -1)
+                foreach (KeyValuePair<string, string> entry in color3uint8ToBrickColor)
                 {
-                    int colorEndIndex = fileContents.IndexOf("</Color3uint8>", colorIndex);
-                    if (colorEndIndex != -1)
-                    {
-                        string color3uint8Code = fileContents.Substring(colorIndex + 32, colorEndIndex - colorIndex - 32);
-                        fileContents = fileContents.Remove(colorIndex, colorEndIndex - colorIndex + 14);
-                        if (color3uint8ToBrickColor.ContainsKey(color3uint8Code))
-                        {
-                            fileContents = fileContents.Insert(colorIndex, "<int name=\"BrickColor\">" + color3uint8ToBrickColor[color3uint8Code] + "</int>");
-                        }
-                    }
-                    colorIndex = fileContents.IndexOf("<Color3uint8 name=\"Color3uint8\">", colorIndex);
+                    fileContents = fileContents.Replace("<Color3uint8 name=\"Color3uint8\">" + entry.Key + "</Color3uint8>", "<int name=\"BrickColor\">" + entry.Value + "</int>");
                 }
             }
 
             //If Union data is turned off, removes union data
             if (UnionCheckbox.IsChecked == false)
             {
-                int unionIndex = fileContents.IndexOf("<Item class=\"NonReplicatedCSGDictionaryService\"");
+                int unionIndex = fileContents.IndexOf("<Item class=\"NonReplicatedCSGDictionaryService\"", StringComparison.Ordinal);
                 if (unionIndex != -1)
                 {
-                    int binaryStringIndex = fileContents.IndexOf("<Item class=\"BinaryStringValue\"", unionIndex);
+                    int binaryStringIndex = fileContents.IndexOf("<Item class=\"BinaryStringValue\"", unionIndex, StringComparison.Ordinal);
                     while (binaryStringIndex != -1)
                     {
-                        int binaryStringEndIndex = fileContents.IndexOf("</Item>", binaryStringIndex);
+                        int binaryStringEndIndex = fileContents.IndexOf("</Item>", binaryStringIndex, StringComparison.Ordinal);
                         if (binaryStringEndIndex != -1)
                         {
                             fileContents = fileContents.Remove(binaryStringIndex, binaryStringEndIndex - binaryStringIndex + 7);
                         }
-                        binaryStringIndex = fileContents.IndexOf("<Item class=\"BinaryStringValue\"", binaryStringIndex);
+                        binaryStringIndex = fileContents.IndexOf("<Item class=\"BinaryStringValue\"", binaryStringIndex, StringComparison.Ordinal);
                     }
                 }
             }

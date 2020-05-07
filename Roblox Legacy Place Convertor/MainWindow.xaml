@@ -38,5 +38,6 @@
         <CheckBox x:Name="ColorCheckbox" Content="Include colors" HorizontalAlignment="Left" Margin="474,49,0,0" VerticalAlignment="Top" IsChecked="True" Height="15" FontStretch="SemiExpanded" Foreground="White"/>
         <CheckBox x:Name="UnionCheckbox" Content="Include Union data (may break place file)" HorizontalAlignment="Left" Margin="474,69,0,0" VerticalAlignment="Top" Foreground="White"/>
         <Label Content="Advanced Settings" Margin="474,10,0,0" VerticalAlignment="Top" FontSize="16" Height="35" HorizontalAlignment="Left" Width="397" Foreground="White"/>
+        <CheckBox x:Name="NoScriptConvertCheckbox" Content="Don't convert scripts (may break or sometimes fix place file)" HorizontalAlignment="Left" Margin="474,89,0,0" VerticalAlignment="Top" Foreground="White"/>
     </Grid>
 </Window>

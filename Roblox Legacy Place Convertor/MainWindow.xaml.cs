@@ -192,6 +192,13 @@ namespace Roblox_Legacy_Place_Convertor
                 }
             }
 
+            //Script conversion, removes the weird CDATA stuff if your script is multiline.
+            if (NoScriptConvertCheckbox.IsChecked == false)
+            {
+                fileContents = fileContents.Replace("<ProtectedString name=\"Source\"><![CDATA[", "<ProtectedString name=\"Source\">");
+                fileContents = fileContents.Replace("]]></ProtectedString>", "</ProtectedString>");
+            }
+
             // Write fileContents string to the copy file
             File.WriteAllText(newFilePath, fileContents);
             // Done :D

@@ -127,14 +127,16 @@ namespace Roblox_Legacy_Place_Convertor
             {
                 return;
             }
-            if (fileToConvertPath == "") // When you haven't selected a place file
+            if (String.IsNullOrWhiteSpace(fileToConvertPath)) // When you haven't selected a place file
             {
-                MessageBox.Show("Please select a place you'd like to convert by clicking on 'Browse'", "Conversion status", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please select a place you'd like to convert by clicking on 'Browse'", "Cannot convert place", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
             isConverting = true;
             ConvertButton.IsEnabled = false;
+            ProgressBar.Value = 0;
+            ProgressLabel.Content = "";
 
             // Ask user where to save the copy of the file
             SaveFileDialog fileDialog = new SaveFileDialog();
@@ -146,8 +148,6 @@ namespace Roblox_Legacy_Place_Convertor
                 return;
             }
             newFilePath = fileDialog.FileName;
-            ProgressBar.Value = 0;
-            ProgressLabel.Content = "Making copy of file...";
             File.Copy(fileToConvertPath, newFilePath, true);
             // Read file contents
             string fileContents = File.ReadAllText(newFilePath);
@@ -193,10 +193,40 @@ namespace Roblox_Legacy_Place_Convertor
             }
 
             //Script conversion, removes the weird CDATA stuff if your script is multiline.
-            if (NoScriptConvertCheckbox.IsChecked == false)
+            if (ScriptConvertCheckbox.IsChecked == true)
             {
                 fileContents = fileContents.Replace("<ProtectedString name=\"Source\"><![CDATA[", "<ProtectedString name=\"Source\">");
                 fileContents = fileContents.Replace("]]></ProtectedString>", "</ProtectedString>");
+                //Change stuff like quotes to a format old roblox places support
+                int scriptStartIndex = fileContents.IndexOf("<ProtectedString name=\"Source\">", StringComparison.Ordinal);
+                while (scriptStartIndex != -1)
+                {
+                    int scriptEndIndex = fileContents.IndexOf("</ProtectedString>", scriptStartIndex, StringComparison.Ordinal);
+                    if (scriptEndIndex != -1)
+                    {
+                        string scriptBeforeContents = fileContents.Substring(scriptStartIndex + 31, scriptEndIndex - scriptStartIndex - 31);
+                        string scriptAfterContents = scriptBeforeContents;
+                        scriptAfterContents = scriptAfterContents.Replace("\"", "&quot;");
+                        scriptAfterContents = scriptAfterContents.Replace("\'", "&apos;");
+                        scriptAfterContents = scriptAfterContents.Replace("<", "&lt;");
+                        scriptAfterContents = scriptAfterContents.Replace(">", "&gt;");
+                        Debug.WriteLine(scriptAfterContents);
+                        fileContents = fileContents.Replace(scriptBeforeContents, scriptAfterContents);
+                    }
+                    scriptStartIndex = fileContents.IndexOf("<ProtectedString name=\"Source\">", scriptEndIndex, StringComparison.Ordinal);
+                }
+            }
+
+            //Changes rbxassetid to longer link variant, fixes assets not loading in older clients
+            if (ChangeRbxassetidCheckbox.IsChecked == true)
+            {
+                fileContents = fileContents.Replace("rbxassetid://", "http://www.roblox.com/asset/?id=");
+            }
+
+            //Convert folders to models, since old Roblox clients don't support folders and therefore everything inside of folders isn't shown
+            if (ConvertFoldersCheckbox.IsChecked == true)
+            {
+                fileContents = fileContents.Replace("<Item class=\"Folder\"", "<Item class=\"Model\"");
             }
 
             // Write fileContents string to the copy file

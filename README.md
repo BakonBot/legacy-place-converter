@@ -19,3 +19,5 @@ Color3 (Color3uint8 in the place files) is represented similarly to hex color co
 BrickColor is represented as a color code from a list of predefined colors (which you can find here https://developer.roblox.com/en-us/articles/BrickColor-Codes)
 
 Converting from Color3 to BrickColor is fairly easily done. For me it was time consuming as I converted each Color3 to their BrickColor counterparts manually.
+
+Of course, this is just for converting basic places and there's a lot more that this converter does. I am planning to explain all of this in a PDF soon.

@@ -205,13 +205,15 @@ namespace Roblox_Legacy_Place_Convertor
                     if (scriptEndIndex != -1)
                     {
                         string scriptBeforeContents = fileContents.Substring(scriptStartIndex + 31, scriptEndIndex - scriptStartIndex - 31);
-                        string scriptAfterContents = scriptBeforeContents;
-                        scriptAfterContents = scriptAfterContents.Replace("\"", "&quot;");
-                        scriptAfterContents = scriptAfterContents.Replace("\'", "&apos;");
-                        scriptAfterContents = scriptAfterContents.Replace("<", "&lt;");
-                        scriptAfterContents = scriptAfterContents.Replace(">", "&gt;");
-                        Debug.WriteLine(scriptAfterContents);
-                        fileContents = fileContents.Replace(scriptBeforeContents, scriptAfterContents);
+                        if (scriptBeforeContents.Length > 0)
+                        {
+                            string scriptAfterContents = scriptBeforeContents;
+                            scriptAfterContents = scriptAfterContents.Replace("\"", "&quot;");
+                            scriptAfterContents = scriptAfterContents.Replace("\'", "&apos;");
+                            scriptAfterContents = scriptAfterContents.Replace("<", "&lt;");
+                            scriptAfterContents = scriptAfterContents.Replace(">", "&gt;");
+                            fileContents = fileContents.Replace(scriptBeforeContents, scriptAfterContents);
+                        }
                     }
                     scriptStartIndex = fileContents.IndexOf("<ProtectedString name=\"Source\">", scriptEndIndex, StringComparison.Ordinal);
                 }

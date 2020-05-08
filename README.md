@@ -1,6 +1,6 @@
 ![Logo](https://raw.githubusercontent.com/BakonBot/legacy-place-converter/master/lpcLogo.png)
 # Roblox Legacy Place Converter
-## [Download (Version 1.2)](https://github.com/BakonBot/legacy-place-converter/releases/download/1.2/Roblox_Legacy_Place_Converter_1.2.exe)
+## [Download (Version 1.3)](https://github.com/BakonBot/legacy-place-converter/releases/download/1.3/Roblox_Legacy_Place_Converter_1.3.exe)
 ## What does it do?
 Converts recent Roblox places to a format that old Roblox versions can read.
 ## How do I use it?

@@ -1,0 +1,15 @@
+G:\Projects\GitHub\legacy-place-converter\Roblox Legacy Place Convertor\bin\Release\Roblox Legacy Place Converter.exe.config
+G:\Projects\GitHub\legacy-place-converter\Roblox Legacy Place Convertor\bin\Release\Roblox Legacy Place Converter.exe
+G:\Projects\GitHub\legacy-place-converter\Roblox Legacy Place Convertor\bin\Release\Roblox Legacy Place Converter.pdb
+G:\Projects\GitHub\legacy-place-converter\Roblox Legacy Place Convertor\obj\Release\Roblox Legacy Place Convertor.csprojAssemblyReference.cache
+G:\Projects\GitHub\legacy-place-converter\Roblox Legacy Place Convertor\obj\Release\MainWindow.g.cs
+G:\Projects\GitHub\legacy-place-converter\Roblox Legacy Place Convertor\obj\Release\App.g.cs
+G:\Projects\GitHub\legacy-place-converter\Roblox Legacy Place Convertor\obj\Release\Roblox Legacy Place Converter_MarkupCompile.cache
+G:\Projects\GitHub\legacy-place-converter\Roblox Legacy Place Convertor\obj\Release\Roblox Legacy Place Converter_MarkupCompile.lref
+G:\Projects\GitHub\legacy-place-converter\Roblox Legacy Place Convertor\obj\Release\MainWindow.baml
+G:\Projects\GitHub\legacy-place-converter\Roblox Legacy Place Convertor\obj\Release\Roblox Legacy Place Converter.g.resources
+G:\Projects\GitHub\legacy-place-converter\Roblox Legacy Place Convertor\obj\Release\Roblox_Legacy_Place_Converter.Properties.Resources.resources
+G:\Projects\GitHub\legacy-place-converter\Roblox Legacy Place Convertor\obj\Release\Roblox Legacy Place Convertor.csproj.GenerateResource.cache
+G:\Projects\GitHub\legacy-place-converter\Roblox Legacy Place Convertor\obj\Release\Roblox Legacy Place Convertor.csproj.CoreCompileInputs.cache
+G:\Projects\GitHub\legacy-place-converter\Roblox Legacy Place Convertor\obj\Release\Roblox Legacy Place Converter.exe
+G:\Projects\GitHub\legacy-place-converter\Roblox Legacy Place Convertor\obj\Release\Roblox Legacy Place Converter.pdb

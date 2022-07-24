@@ -113,7 +113,7 @@ namespace Roblox_Legacy_Place_Convertor
             }
             // Opens a file dialog asking you which file do you want to convert
             OpenFileDialog fileDialog = new OpenFileDialog();
-            fileDialog.Filter = "Roblox XML Place Files (*.rbxlx)|*.rbxlx";
+            fileDialog.Filter = "Roblox XML Place Files (*.rbxlx)|*.rbxlx|Roblox XML Model Files (*.rbxmx)|*.rbxmx|Roblox XML Place Files (*.rbxl)|*.rbxl|Roblox XML Model Files (*.rbxm)|*.rbxm";
             if (fileDialog.ShowDialog() == true)
             {
                 fileToConvertPath = fileDialog.FileName;

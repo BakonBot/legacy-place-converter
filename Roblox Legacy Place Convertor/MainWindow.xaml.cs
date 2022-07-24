@@ -117,7 +117,7 @@ namespace Roblox_Legacy_Place_Convertor
             if (fileDialog.ShowDialog() == true)
             {
                 fileToConvertPath = fileDialog.FileName;
-                PlaceSelectedLabel.Content = "Place selected: " + fileToConvertPath;
+                PlaceSelectedLabel.Content = "File selected: " + fileToConvertPath;
             }
         }
 
@@ -127,10 +127,21 @@ namespace Roblox_Legacy_Place_Convertor
             {
                 return;
             }
-            if (String.IsNullOrWhiteSpace(fileToConvertPath)) // When you haven't selected a place file
+            if (string.IsNullOrWhiteSpace(fileToConvertPath)) // When you haven't selected a place file
             {
-                MessageBox.Show("Please select a place you'd like to convert by clicking on 'Browse'", "Cannot convert place", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please select a model or place you'd like to convert by clicking on 'Browse'", "Cannot convert place", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
+            }
+
+            string[] file = File.ReadAllLines(fileToConvertPath);
+
+            foreach (var line in file)
+            {
+                if (line.Contains("<roblox!"))
+                {
+                    MessageBox.Show("Please select a model or place in Roblox XML format.", "Cannot convert place", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
             }
 
             isConverting = true;
@@ -140,7 +151,7 @@ namespace Roblox_Legacy_Place_Convertor
 
             // Ask user where to save the copy of the file
             SaveFileDialog fileDialog = new SaveFileDialog();
-            fileDialog.Filter = "Roblox Place Files (*.rbxl)|*.rbxl";
+            fileDialog.Filter = "Roblox XML Place Files (*.rbxl)|*.rbxl|Roblox XML Model Files (*.rbxm)|*.rbxm";
             if (fileDialog.ShowDialog() != true)
             {
                 isConverting = false;
@@ -151,6 +162,7 @@ namespace Roblox_Legacy_Place_Convertor
             File.Copy(fileToConvertPath, newFilePath, true);
             // Read file contents
             string fileContents = File.ReadAllText(newFilePath);
+
             // Search for terrain in place file, necessary for place to even open on old Roblox versions. When it finds its start and end, it removes the terrain part completely.
 
             int terrainIndex = fileContents.IndexOf("<Item class=\"Terrain\"", StringComparison.Ordinal);

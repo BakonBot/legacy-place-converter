@@ -14,10 +14,10 @@ Removing it from the file makes it able to open the place file on old Roblox ver
 
 Why? Roblox uses Color3 (R, G, B) for part colors, while back in the day it used BrickColor (Predefined colors, when Color3 either wasn't a thing or was hard to implement for part colors)
 
-Color3 (Color3uint8 in the place files) is represented similarly to hex color codes, difference being Color3 uses decimal numbers instead of hexadecimal ones and adds FF000000 (4278190080) to the hex color code for some reason.
+Color3 (Color3uint8 in the place files) is represented similarly to hex color codes, difference being Color3 uses decimal numbers instead of hexadecimal ones and adds FF000000 (4278190080) to the hex color code for some reason. (I assume it is for the alpha channel that has no reason to exist because of the Transparency property)
 
 BrickColor is represented as a color code from a list of predefined colors (which you can find here https://developer.roblox.com/en-us/articles/BrickColor-Codes)
 
 Converting from Color3 to BrickColor is fairly easily done. For me it was time consuming as I converted each Color3 to their BrickColor counterparts manually.
 
-Of course, this is just for converting basic places and there's a lot more that this converter does. I am planning to explain all of this in a PDF soon.
+Of course, this is just for converting basic places and there's a lot more that this converter does. I've had an idea to document it all in a PDF/Word file, but gave up as that would mean commenting other people's contributions as well which is a bit too time consuming considering the fact that I'm working on other projects as well.

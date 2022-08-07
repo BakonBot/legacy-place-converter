@@ -42,6 +42,6 @@
         <CheckBox x:Name="ConvertFoldersCheckbox" Content="Convert folders into models (fixes missing objects)" HorizontalAlignment="Left" Margin="474,109,0,0" VerticalAlignment="Top" Foreground="White" IsChecked="True"/>
         <TextBlock Text="If you don't know what you're doing, don't change anything here" Margin="620,15,0,0" VerticalAlignment="Top" FontSize="12" Height="35" HorizontalAlignment="Left" Width="237" Foreground="#FFCBCBCB" TextWrapping="WrapWithOverflow" FontWeight="SemiBold"/>
         <CheckBox x:Name="ChangeRbxassetidCheckbox" Content="Change rbxassetid to longer variant (fixes assets not loading)" HorizontalAlignment="Left" Margin="474,129,0,0" VerticalAlignment="Top" Foreground="White" IsChecked="True"/>
-        <CheckBox x:Name="ChangeTextSizeToFontSizeCheckbox" Content="Convert TextSize to Legacy FontSize ( May not be exact font size )" HorizontalAlignment="Left" Margin="474,149,0,0" VerticalAlignment="Top" Foreground="White" IsChecked="True" Checked="ChangeRbxassetidCheckbox_Copy_Checked"/>
+        <CheckBox x:Name="ChangeTextSizeToFontSizeCheckbox" Content="Convert TextSize to Legacy FontSize ( May not be exact font size )" HorizontalAlignment="Left" Margin="474,149,0,0" VerticalAlignment="Top" Foreground="White" IsChecked="True"/>
     </Grid>
 </Window>

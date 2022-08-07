@@ -1,4 +1,4 @@
-﻿using Microsoft.Win32;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -176,6 +176,27 @@ namespace Roblox_Legacy_Place_Convertor
                 }
             }
 
+            //Convert TextSize to Legacy FontSize
+            if (ChangeTextSizeToFontSizeCheckbox.IsChecked == true)
+            {
+                int[] FontSizes = new int[10] { 8, 9, 10, 11, 12, 14, 18, 24, 36, 48 };
+                Dictionary<int, int> converted = new Dictionary<int, int>();
+                Regex rg = new Regex(@"<float name=""TextSize"">(\d{1,3})</float>");
+                MatchCollection matchedfloats = rg.Matches(fileContents);
+
+                foreach (Match ItemMatch in matchedfloats)
+                {
+                    var nearest = FontSizes.OrderBy(x => Math.Abs((long)x - Int32.Parse(ItemMatch.Groups[1].Value))).First();
+                    converted[Int32.Parse(ItemMatch.Groups[1].Value)] = nearest;
+                }
+
+                foreach (KeyValuePair<int, int> entry in converted)
+                {
+                    // do something with entry.Value or entry.Key
+                    fileContents = fileContents.Replace("<float name=\"TextSize\">" + entry.Key.ToString() + "</float>", "<token name=\"FontSize\">" + Array.IndexOf(FontSizes, entry.Value).ToString() + "</token>");
+                }
+            }
+
             // Convert colors from Color3uint8 to BrickColor
             if (ColorCheckbox.IsChecked == true)
             {
@@ -243,6 +264,8 @@ namespace Roblox_Legacy_Place_Convertor
                 fileContents = fileContents.Replace("<Item class=\"Folder\"", "<Item class=\"Model\"");
             }
 
+            
+
             // Write fileContents string to the copy file
             File.WriteAllText(newFilePath, fileContents);
             // Done :D
@@ -251,6 +274,11 @@ namespace Roblox_Legacy_Place_Convertor
             MessageBox.Show("Conversion done!", "Conversion status", MessageBoxButton.OK, MessageBoxImage.Information);
             isConverting = false;
             ConvertButton.IsEnabled = true;
+        }
+
+        private void ChangeRbxassetidCheckbox_Copy_Checked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -275,10 +275,5 @@ namespace Roblox_Legacy_Place_Convertor
             isConverting = false;
             ConvertButton.IsEnabled = true;
         }
-
-        private void ChangeRbxassetidCheckbox_Copy_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
